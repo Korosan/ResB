@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录页面</title>
+	<script type="text/javascript" src="js/ajax.js"></script>
+</head>
+<style type="text/css">
+*{
+	margin: 0;
+	padding: 0;
+}
+.formd{
+	display: table;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.md{
+	display: table-cell;
+	vertical-align: middle;
+}
+#logintable{
+	width: 60%;
+	max-width: 300px;
+	margin: 0 auto;
+	/*border: 1px solid #f0f0f0;*/
+	padding: 17px;
+	box-sizing:content-box;
+}
+#logintable .title{
+	text-align: center;
+	font-size: 18px;
+}
+#logintable .contain ul li{
+	list-style: none;
+	margin-top: 10px;
+}
+#logintable .contain ul li.msg{
+	overflow: hidden;
+}
+#logintable .contain ul li.msg input{
+	width: 100%;
+	padding: 5px 10px;
+	box-sizing:border-box;
+	margin-top: 10px;
+	line-height: 20px;
+	height: 40px;
+}
+#logintable .contain ul li.msg input#recode{
+	width: 50%;
+	float: left;
+}
+#vcode{
+	width: 45%;
+	margin-top: 10px;
+	box-sizing:border-box;
+	float: left;
+	height: 40px;
+	margin-left: 5%;
+	border: 1px solid #a9a9a9;
+	cursor: pointer;
+}
+#logintable .contain ul li.btn{
+	overflow: hidden;
+}
+#logintable .contain ul li.btn input{
+	padding: 10px 0;
+	width: 40%;
+	margin:10px 5%;
+	box-sizing:border-box;
+	float: left;
+}
+#tips{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+}
+#tips>div:before{
+	content: "";
+	width: 1px;
+	height: 20px;
+	display: block;
+	clear: both;
+	background: #666;
+	margin: 0 auto;
+}
+#tipscontent{
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid #666;
+	padding: 0 30px;
+	border-radius: 10px;
+	display: inline-block;
+}
+</style>
+<body>
+<div class="formd">
+	<div class="md">
+		<div id="logintable">
+			<div class="title">登录界面</div>
+			<div class="contain">
+				<ul>
+					<li class="msg">
+						<input type="text" autocomplete="off" placeholder="请输入您的账号" id="userName" />
+						<input type="password" autocomplete="off" placeholder="请输入您的密码" id="passWord" />
+						<input type="text" autocomplete="off" placeholder="请输入验证码" id="recode">
+						<canvas id="vcode" onclick="ComfirmCode.drawCode()"></canvas>
+					</li>
+					<li class="btn">
+						<input type="button" value="登录" onclick="loginchecked()" />
+						<input type="button" value="注册" />
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+createTips();
+
+
+
+function createTips(){
+	var createTip = document.createElement("div");
+	createTip.id="tips";
+	document.body.appendChild(createTip);
+	var createContain = document.createElement("div");
+	var createContent = document.createElement("span");
+	createTip.appendChild(createContain);
+	createContain.appendChild(createContent);
+	createContent.id="tipscontent";
+	createTip.style.marginTop=-createTip.offsetHeight+"px";
+	createTip.style.display="none";
+
+}
+function tipscondition(text){
+	var tips = document.getElementById("tips");
+	var tipscontent = document.getElementById("tipscontent");
+	tipscontent.innerHTML = text;
+	if(tips.style.display=="none"){
+		tips.style.display="block";
+		setTimeout(function(){
+			tips.style.transition="0.4s";
+			tips.style.marginTop="0px";
+			setTimeout(function(){
+				tips.style.marginTop=-tips.offsetHeight+"px";
+				tips.style.transition="0.2s";
+				setTimeout(function(){
+					tips.style.display="none";
+					tips.style.transition="";
+				}, 200);
+			}, 2000);
+		}, 10);
+	}
+}
+function loginchecked(){
+	var userName = document.getElementById("userName");
+	var passWord = document.getElementById("passWord");
+	var confcode = document.getElementById("recode");
+	var myCanvas = document.getElementById("vcode");
+	if(userName.value==""){
+		tipscondition("用户名不能为空");
+		userName.value = "";
+		passWord.value = "";
+        confcode.value = "";
+	}else if(passWord.value==""){
+		tipscondition("密码不能为空");
+		userName.value = "";
+		passWord.value = "";
+        confcode.value = "";
+	}else if(confcode.value.toUpperCase() != myCanvas.attributes["cde"]){
+		tipscondition("验证码输入错误！@_@"); //则弹出验证码输入错误
+		ComfirmCode.drawCode();//刷新验证码 
+		userName.value = "";
+		passWord.value = "";
+        confcode.value = "";//清空文本框  
+	}else{
+		Ajax({
+			url: '/check',
+			type: 'POST',
+			data:'userName='+userName.value+'&passWord='+passWord.value,
+			success:function(data){
+				data=JSON.parse(data);
+				msg=data.msg;
+				switch (msg) {
+					case "该用户已登录":
+						// statements_1
+						tipscondition("该用户已登录");
+						userName.value = "";
+						passWord.value = "";
+				        confcode.value = "";
+						break;
+					case "账号密码错误":
+						// statements_1
+						tipscondition("账号密码错误");
+						userName.value = "";
+						passWord.value = "";
+				        confcode.value = "";
+						break;
+					case "通过":
+						// statements_1
+						window.location.href=data.url;
+						break;
+					default:
+						// statements_def
+						break;
+				}
+			}
+		})
+	}
+}
+function createCode(codelen){
+	var code="";
+	var random=[0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+	for(var i=0;i<codelen;i++){
+		code+=random[Math.floor(Math.random()*random.length)];
+	}
+	return code;
+}
+var ComfirmCode={
+	myCanvas:document.getElementById("vcode"),
+	c:document.getElementById("vcode").getContext("2d"),
+	states:function(){
+		this.myCanvas.width=this.myCanvas.offsetWidth;
+		this.myCanvas.height=this.myCanvas.offsetHeight;
+	},
+	clear:function(){
+		this.c.restore();
+		this.c.save();
+		this.c.beginPath();
+		this.c.clearRect(0,0,this.myCanvas.offsetWidth,this.myCanvas.offsetHeight);	
+	},
+	drawCode:function(){
+		this.clear();
+		// c.globalCompositeOperation = "source-over";
+		// c.globalAlpha=0.21;
+		this.myCanvas.attributes["cde"]=createCode(4);
+		this.c.font="italic 20px arial";
+		this.c.textAlign='center';//文本水平对齐方式
+		this.c.textBaseline='middle';//文本垂直方向，基线位置 
+		this.c.fillText(this.myCanvas.attributes["cde"],this.myCanvas.offsetWidth/2,this.myCanvas.offsetHeight/2);
+	},
+}
+ComfirmCode.states();
+ComfirmCode.drawCode();
+
+</script>
+</body>
+</html>

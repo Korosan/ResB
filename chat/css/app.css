@@ -1,0 +1,257 @@
+
+html{
+    height: 100%;
+    overflow: hidden;
+}
+body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: gainsboro;
+    font: 12px/1.4 '微软雅黑';
+}
+*{
+    margin:0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+
+.pcontain{
+    top: 0;
+    width: 30%;
+    height: 95%;
+    right: 10px;
+    margin: 10px 5% 10px 0;
+    position: absolute;
+    border: 1px solid #ccc;
+    background: #fff;
+    box-sizing:border-box;
+    max-width: 300px;
+}
+.login{
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+.login .hmiddle{
+    display: table-cell;
+    vertical-align: middle;
+}
+.login span.til{
+    width: 100%;
+    text-align: center;
+    display: block;
+    font-size: 24px;
+}
+.login span.inp{
+    display: block;
+    width: 90%;
+    margin:10px auto;
+    text-align: center;
+}
+.login span.inp input{
+    margin:10px 0;
+    width: 100%;
+}
+.login span.btn{
+    cursor:pointer;
+    width: 40%;
+    margin:0 5%;
+    float: left;
+}
+
+.chatroom{
+}
+.wrapper{
+    width: 60%;
+    height: 95%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin:10px 0 10px 5%;
+    background-color: #EFF4FA;
+    box-sizing: border-box;
+    max-width: 600px;
+}
+
+.wrapper .content{
+    box-sizing: border-box;
+    height: 73%;
+    border: 1px solid #ccc;
+    margin: 1% 10px;
+    padding: 5px;
+}
+.wrapper_title{
+    margin:5px 10px 0px 15px;
+}
+.wrapper_title span{
+    cursor: default;
+}
+.wrapper_title span.closebtn{
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.chat_content,.chat_content2{
+    overflow-y: auto;
+    background-color: #000000;
+    height: 100%;
+    float: left;
+}
+.chat_content{
+    width: 70%;
+}
+.chat_content2{
+    width: 100%;
+}
+.roompeople{
+    overflow-y: auto;
+    width: 30%;
+    height: 100%;
+    float: left;
+}
+.roompeople span{
+    padding-left: 5px;
+    display: block;
+}
+.roompeople ul li{
+   font-size: 14px;
+   padding: 5px;
+   word-break:break-all;
+}
+.roompeople ul li span{
+    font-style: italic;
+    color: greenyellow;
+    margin-right: 6px;
+}
+
+.wrapper .chat_content ul li{
+   font-size: 14px;
+   padding: 5px;
+   color: #ffffff;
+   word-break:break-all;
+}
+.wrapper .chat_content ul li .messageCss{
+    color: #000;
+}
+.wrapper .chat_content ul li span{
+    font-style: italic;
+    color: greenyellow;
+    margin-right: 6px;
+}
+.wrapper .chat_content ul li img{
+    width: 36px;
+    height: 36px;
+    margin-top: 5px;
+}
+.wrapper .chat_content ul li .name{
+    color: greenyellow;
+}
+.wrapper .chat_content ul li .msg{
+    padding: 5px 10px;
+    border: 1px solid #eff4fa;
+    border-radius: 5px;
+    background: #fff;
+}
+.wrapper .chat_content ul li.left{
+    padding: 5px 40px 5px 8px;
+}
+.wrapper .chat_content ul li.left .messageCss,.wrapper .chat_content ul li.left .messageCss img{
+    float: left;
+}
+.wrapper .chat_content ul li.left .name{
+    margin-left: 40px;
+}
+.wrapper .chat_content ul li.left .msg{
+    margin-left: 45px;
+}
+.wrapper .chat_content ul li.right{
+    padding: 5px 8px 5px 40px;
+}
+.wrapper .chat_content ul li.right .messageCss,.wrapper .chat_content ul li.right .messageCss img{
+    float: right;
+}
+.wrapper .chat_content ul li.right .messageCss .name{
+    text-align: right;
+    margin-right: 40px;
+}
+.wrapper .chat_content ul li.right .messageCss .msg{
+    margin-right: 45px;
+}
+.wrapper .chat_content ul li.right:after,.wrapper .chat_content ul li.left:after{
+    content:"";
+    display: block;
+    clear: both;
+    width: 0;
+    height: 0;
+}
+.wrapper .action{
+    box-sizing: border-box;
+    height: 23%;
+    border: 1px solid #ccc;
+    margin: 1% 10px;
+}
+#textarea{
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+    padding: 36px 10px 30px 10px;
+}
+#textarea .btnlist{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    height: 30px;
+    padding: 0 17px;
+    box-sizing: border-box;
+}
+.btnlist button{
+    float: right;
+    height: 20px;
+    padding: 0 17px;
+    margin: 5px 10px;
+}
+#textarea #edit{
+    border:1px solid red;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    display: block;
+    margin-bottom: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    background: #fff;
+    overflow-y: auto;
+}
+#textarea #toolbar{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+#toolbar_cs{
+    padding: 6px 10px 0px 17px;
+    overflow: hidden;
+}
+#toolbar_cs #oSelect{
+    float: right;
+    height: 24px;
+}
+#toolbar_cs .faceIcon,#toolbar_cs .uploadIcon{
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 24px;
+    height: 24px;
+    float: left;
+    cursor:pointer;
+}
+.faceIcon{
+    background-image: url(../upload/faceIcon.png);
+}
+.uploadIcon{
+    background-image: url(../upload/uploadIcon.png);
+    margin-top: 2px;
+    margin-left: 10px;
+}

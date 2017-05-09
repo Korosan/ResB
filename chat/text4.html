@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas特效</title>
+</head>
+<style type="text/css">
+.setlocation{
+	width: 600px;
+	height: 500px;
+	position: absolute;
+	top: 100px;
+	left: 50%;
+	margin-left: -300px;
+	border: 5px solid #949494;
+	box-sizing:border-box;
+}
+#bgc{
+	background: #000;
+}
+#hxc{
+	transform: rotate3d(1,0,0,60deg);
+	border:none;
+}
+</style>
+<body>
+<input type="text" onblur="abcc(this.value)">
+<canvas id="bgc" class="setlocation"></canvas>
+<canvas id="hxc" class="setlocation" data-p="h"></canvas>
+<canvas id="sxc" class="setlocation" data-p="s"></canvas>
+
+<script type="text/javascript">
+
+var moveflag=true;
+function abcc(tel){
+	var reg=/^[A-Za-z\u4e00-\u9fa5]*$/;
+	if((reg.test(tel))){
+		console.log(1);
+	}else{
+		console.log(2);
+	}
+}
+setCanvasWH(document.getElementById("bgc"));
+setCanvasWH(document.getElementById("hxc"));
+setCanvasWH(document.getElementById("sxc"));
+drawbg(document.getElementById("bgc"));
+planet(document.getElementById("hxc"),true,100);
+// planet(document.getElementById("sxc"),true,222);
+// drawstar(document.getElementById("sxc"));
+function setCanvasWH(div){
+	div.width=div.offsetWidth;
+	div.height=div.offsetHeight;
+}
+function clear(c,div){
+	c.restore();
+	c.save();
+	c.beginPath();
+	c.clearRect(0,0,div.offsetWidth,div.offsetHeight);
+}
+function drawbg(div){
+	var ctx = div.getContext('2d');
+	ctx.beginPath();
+	/* 指定渐变区域 */
+	var grad  = ctx.createLinearGradient(0,0,0,div.offsetHeight);
+	/* 指定几个颜色 */
+	grad.addColorStop(0,'#000');
+	grad.addColorStop(0.9,'#989898');
+	grad.addColorStop(1,'#949494');
+	/* 将这个渐变设置为fillStyle */
+	ctx.fillStyle = grad;
+	/* 绘制矩形 */
+	ctx.rect(0,0, div.offsetWidth,div.offsetHeight);
+	ctx.fill();
+}
+function getRandom(div){
+	var getState=div.getAttribute("data-p");
+	if(getState=="h"){
+		var ox=[0,600];
+		var oy=[0,400];
+	}else{
+		var ox=[0,600];
+		var oy=[0,400];
+	}
+	var randomX=Math.floor(Math.random()*(ox[1]-ox[0])+ox[0]);
+	var randomY=Math.floor(Math.random()*(oy[1]-oy[0])+oy[0]);
+	// var ranscaleX=(Math.floor(Math.random()*3)+1)*0.1;
+	var org={};
+	org.x=randomX;
+	org.y=randomY;
+	// org.scaleX=ranscaleX;
+	// org.scaleY=ranscaleX;
+	org.cx=org.x-(div.offsetWidth/2);
+	org.cy=org.y-(div.offsetHeight/2);
+	org.r=getR(org.cx,org.cy);
+	var deg=360*Math.atan(Math.abs(org.cx/org.cy))/(2*Math.PI);
+	if(org.cx>0 && org.cy<0){
+	}else if(org.cx>0 && org.cy>0){
+		deg=180-deg;
+	}else if(org.cx<0 && org.cy>0){
+		deg=180+deg;
+	}else if(org.cx<0 && org.cy<0){
+		deg=360-deg;
+	}
+	org.deg=deg;
+	return org;
+}
+
+//旋转星体
+function getrotateRandom(div){
+	var or=[50,100];
+	var randomR=Math.floor(Math.random()*(or[1]-or[0])+or[0]);
+	var randomdeg=Math.floor(parseInt(Math.random()*360));
+	// var ranscaleX=(Math.floor(Math.random()*3)+1)*0.1;
+	var radian=2*Math.PI/360*(randomdeg);
+	var org={};
+	org.r=randomR;
+	org.deg=randomdeg;
+	org.cx=org.r*Math.sin(radian);
+	org.cy=org.r*Math.cos(radian);
+	org.x=org.cx+(div.offsetWidth/2);
+	org.y=org.cy+(div.offsetHeight/2);
+	return org;
+}
+
+function planet(div,flag,num){
+	var ctx = div.getContext('2d');
+	var originplace=[];
+	for(var i=0;i<num;i++){
+		if(flag){
+			originplace.push(getrotateRandom(div));
+		}else{
+			originplace.push(getRandom(div));
+		}
+		drawplanet(div,ctx,originplace[i]);
+	}
+	if(flag){
+		moveplanet(div,ctx,originplace,10);
+	}else{
+		// moveplanet(div,ctx,originplace,2000);
+	}
+}
+
+function drawplanet(div,ctx,org){
+	ctx.fillStyle = "#eaff2d";
+	ctx.strokeStyle = "#eaff2d";
+	ctx.moveTo(org.x,org.y);
+	/*ctx.lineTo(org.x+4*org.scaleX,org.y+12*org.scaleY);
+	ctx.lineTo(org.x+12*org.scaleX,org.y+16*org.scaleY);
+	ctx.lineTo(org.x+4*org.scaleX,org.y+18*org.scaleY);
+	ctx.lineTo(org.x,org.y+32*org.scaleY);
+	ctx.lineTo(org.x-4*org.scaleX,org.y+18*org.scaleY);
+	ctx.lineTo(org.x-12*org.scaleX,org.y+16*org.scaleY);
+	ctx.lineTo(org.x-4*org.scaleX,org.y+12*org.scaleY);*/
+	ctx.lineTo(org.x,org.y+5);
+	ctx.stroke();
+	// ctx.fill();
+}
+function moveplanet(div,ctx,orglist,time){
+	moveparameter(div,orglist,1);
+	clear(div,ctx);
+	for(var i=0;i<orglist.length;i++){
+		drawplanet(div,ctx,orglist[i]);
+	}
+	if(moveflag){
+		setTimeout(function(){
+			moveplanet(div,ctx,orglist,time);
+		}, time);
+	}
+}
+
+function clear(div,c){
+	c.restore();
+	c.save();
+	c.beginPath();
+	c.clearRect(0,0,div.offsetWidth,div.offsetHeight);
+}
+
+
+// 围绕一点旋转
+
+function getR(insertX,insertY){
+	return Math.sqrt(Math.pow(insertX,2)+Math.pow(insertY,2));
+}
+
+function redraw(){
+
+}
+
+function moveparameter(div,orglist,deg){
+	for(var i=0;i<orglist.length;i++){
+		orglist[i].deg+=deg;
+		if(orglist[i].deg>360){
+			orglist[i].deg=orglist[i].deg-360;
+		}
+		var radian=2*Math.PI/360*(orglist[i].deg);
+		orglist[i].cx=Math.sin(radian)*orglist[i].r;
+		orglist[i].cy=Math.cos(radian)*orglist[i].r;
+		orglist[i].x=orglist[i].cx+(div.offsetWidth/2);
+		orglist[i].y=orglist[i].cy+(div.offsetHeight/2);
+	}
+	console.log(orglist);
+	return orglist;
+}
+
+
+
+
+
+
+
+
+
+
+
+// 画星星
+function onestar(div){
+	var randomX=Math.floor(Math.random()*400+100);
+	var randomY=Math.floor(Math.random()*300+100);
+	ranscaleX=Math.floor(Math.random()*3)*0.1;
+	ranscaleX=ranscaleX*0.5*0.5*0.02;
+	ranscaleY=ranscaleX;
+	originplace={
+		x:randomX,
+		y:randomY,
+	}
+	ctx.strokeStyle = "#f4fcd4";
+	ctx.lineWidth = 2;
+	ctx.fillStyle = "#eaff2d";
+	ctx.moveTo(originplace.x,originplace.y);
+	ctx.lineTo(originplace.x+4*ranscaleX,originplace.y+12*ranscaleY);
+	ctx.lineTo(originplace.x+12*ranscaleX,originplace.y+12*ranscaleY);
+	ctx.lineTo(originplace.x+4*ranscaleX,originplace.y+16*ranscaleY);
+	ctx.lineTo(originplace.x+8*ranscaleX,originplace.y+28*ranscaleY);
+	ctx.lineTo(originplace.x,originplace.y+20*ranscaleY);
+	ctx.lineTo(originplace.x-8*ranscaleX,originplace.y+28*ranscaleY);
+	ctx.lineTo(originplace.x-4*ranscaleX,originplace.y+16*ranscaleY);
+	ctx.lineTo(originplace.x-12*ranscaleX,originplace.y+12*ranscaleY);
+	ctx.lineTo(originplace.x-4*ranscaleX,originplace.y+12*ranscaleY);
+	ctx.lineTo(originplace.x,originplace.y);
+	ctx.stroke();
+	ctx.fill();
+
+}
+
+</script>
+	
+</body>
+</html>

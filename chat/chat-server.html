@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>socket.io 聊天室例子</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/qqface.css"/>
+    <link rel="stylesheet" type="text/css" href="css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="css/chat.css"/>
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+    
+    
+    <script type="text/javascript" src="js/socket.io.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/ajax.js"></script>
+</head>
+<body>
+<div class="pcontain">
+    <div class="apcontain" id="apcontain">
+        <div class="ap_personalInfo">
+            <span class="user" id="user"></span>
+            <a class="exitbtn" href="/login">注销</a>
+        </div>
+        <div class="operation">
+            <div class="allexistp_name" id="existp_name">
+                <span>所有人</span>
+            </div>
+            <div class="chatroom" id="chatroom">
+                <span>聊天室</span>
+                <span class="add" onclick="UserInfo.addRoom()">添加</span>
+                <ul id="rooms">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper" id="room">
+</div>
+<div id="fwrap" style="display:none">
+    <div class="darkbg"></div>
+    <div class="vmid">
+        <div id="fcontain">
+            <div class="fcontain_c">
+                <div class="title">
+                    <span class="word" id="word"></span>
+                    <span class="close" onclick="textBox.closeBox()"></span>
+                </div>
+                <div class="content">
+                    <ul id="contentList">
+                        
+                    </ul>
+                </div>
+                <div class="bottom">
+                    <input type="button" onclick="textBox.submit()" value="提交" />
+                    <input type="button" onclick="textBox.closeBox()" value="取消" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+function uploadFile(){
+    var oMyForm = new FormData();
+    // fileInputElement中已经包含了用户所选择的文件
+    oMyForm.append("username", document.getElementById("user").innerHTML);
+    for(var i=0;i<fileInputElement.files.length;i++){
+        oMyForm.append("userfile"+i, fileInputElement.files[i]);
+    }
+    $.ajax({
+        cache: true,
+        type: "POST",
+        url:"/upload",
+        contentType: false,
+        processData: false,
+        data:oMyForm,// 你的formid
+        success:function(msg){
+            for(var key in msg){
+                var img=document.createElement("img");
+                img.src=msg[key].path;
+                Room.RoomWrapper.appendChild(img);
+                console.log(msg);
+            }
+        }
+    });
+}
+var Room={
+    RoomWrapper:document.getElementById("room"),
+    createRoom:function(type,title){
+        if(!this.innHTML){
+            var addface="";
+            for(var i=1;i<=105;i++){
+                addface+="<a class='P28_emoji P28_emoji"+i+"' onclick='insertEmoji(this)'></a>";
+            }
+            this.innHTML="<div class='wrapper_title'>";
+            this.innHTML+="<span id='wrapper_title'></span>";
+            this.innHTML+="<span class='closebtn' onclick='Room.exitRoom()'>关闭</span>";
+            this.innHTML+="</div>";
+
+            this.innHTML+="<div class='content'>";
+            if(type=="公聊室"){
+                this.innHTML+="<div class='chat_content' id='chat'>";
+            }else{
+                this.innHTML+="<div class='chat_content2' id='chat'>";
+            }
+            this.innHTML+="<ul id='chat_conatiner'></ul>";
+            this.innHTML+="</div>";
+            if(type=="公聊室"){
+                this.innHTML+="<div class='roompeople' id='roompeople'>";
+                this.innHTML+="<span id='peopleNum'>目前共有：人</span>";
+                this.innHTML+="<span onclick='textBox.open()'>邀请</span>";
+                this.innHTML+="<ul class='peoplelist' id='peopleList'></ul>";
+                this.innHTML+="</div>";
+            }
+            this.innHTML+="</div>";
+
+            this.innHTML+="<div class='action'>";
+            this.innHTML+="<div id='textarea'>";
+
+            this.innHTML+="<div id='toolbar'>";
+
+            this.innHTML+="<div id='toolbar_cs'>";
+            this.innHTML+="<span class='faceIcon' title='表情' onclick='Room.qqfaceQuota(this)'></span>";
+            this.innHTML+="<span class='uploadIcon' title='发送' ></span>";
+            this.innHTML+="<input type='file' style='display:none' id='fileInputElement' name='file' size='50' multiple>";
+            this.innHTML+="<select id='oSelect'><option value='所有人'>所有人</option></select>";
+            this.innHTML+="</div>";
+
+            this.innHTML+="<div id='qqface'>";
+            this.innHTML+="<ul id='bar'>";
+            this.innHTML+="<span>QQ表情</span>";
+            this.innHTML+="</ul>";
+            this.innHTML+="<ul id='p28'>"+addface+"</ul>";
+            this.innHTML+="</div>";
+
+            this.innHTML+="</div>";
+
+            this.innHTML+="<div id='edit' contenteditable onpaste='console.log(this)'></div>";
+            this.innHTML+="<div class='btnlist'>";
+            this.innHTML+="<button class='btn' id='clear'>清屏</button>";
+            this.innHTML+="<button class='btn' id='send'>发送</button>";
+            this.innHTML+="</div>";
+
+            this.innHTML+="</div>";
+            this.innHTML+="</div>";
+
+            /*this.innHTML="<div class='wrapper_title'><span id='wrapper_title'></span><span class='closebtn' onclick='Room.exitRoom()'>关闭</span></div>";
+            this.innHTML+="<div class='content'><div class='chat_content' id='chat'><ul id='chat_conatiner'></ul></div><div class='roompeople' id='roompeople'><span id='peopleNum'>目前共有：人</span><span onclick='textBox.open()'>邀请</span><ul class='peoplelist' id='peopleList'></ul></div></div>";
+            this.innHTML+="<div class='action'><div id='textarea'><div id='toolbar'><div id='toolbar_cs'><span class='faceIcon' title='表情'' onclick='Room.qqfaceQuota(this)'></span><select id='oSelect'><option value='所有人'>所有人</option></select></div><div id='qqface'><ul id='bar'><span>QQ表情</span></ul><ul id='p28'>"+addface+"</ul></div></div><div id='edit' contenteditable></div><div class='btnlist'><button class='btn' id='clear'>清屏</button><button class='btn' id='send'>发送</button></div></div></div>";*/
+
+            this.RoomWrapper.innerHTML=this.innHTML;
+            this.RoomState();
+            var toolbar_cs=document.getElementById("toolbar_cs");
+            var fileInputElement=document.getElementById("fileInputElement");
+            var uploadSpan=toolbar_cs.getElementsByTagName("span")[1];
+            uploadSpan.onclick=function(){
+                fileInputElement.click();
+            }
+            fileInputElement.onchange=function(){
+                uploadFile();
+            }
+            var lastEditRange;
+
+            this.oEdit.onclick = function() {
+                // 获取选定对象
+                var selection = getSelection()
+                // 设置最后光标对象
+                lastEditRange = selection.getRangeAt(0)
+            }
+
+            // 编辑框按键弹起事件 v
+            this.oEdit.onkeyup = function() {
+                // 获取选定对象
+                var selection = getSelection()
+                // 设置最后光标对象
+                lastEditRange = selection.getRangeAt(0)
+            }
+        }
+        if(this.RoomWrapper.style.display=="none"){
+            this.RoomWrapper.style.display="";
+        }
+         
+        this.wrapper_title.innerHTML=type+" : "+title;
+        this.oSend.onclick=function(){
+            Room.send();
+        }
+        this.oEdit.onkeydown=function(e){
+            var keyCode = e.keyCode || e.which || e.charCode;
+            var ctrlKey = e.ctrlKey || e.metaKey;
+            if(ctrlKey && keyCode == 13) {
+                Room.send();
+            }
+        }
+        // this.RoomWrapper.onclick=function(ev){
+        //     var ev = ev || window.event;
+        //     var target = ev.target || ev.srcElement;
+        //     if(target.id=="send"){
+        //     }
+        // }
+    },
+
+    qqfaceQuota:function(This){
+        if(this.qqface.className=="open"){
+            this.qqface.className="";
+            this.qqface.style.top="";
+        }else{
+            this.qqface.className="open";
+            this.qqface.style.top=-this.qqface.offsetHeight+"px";
+        }
+    },
+    RoomState:function(){
+        this.oChat_conatiner=document.getElementById("chat_conatiner");
+        this.wrapper_title=document.getElementById("wrapper_title");
+        this.peopleList=document.getElementById("peopleList");
+        this.peopleNum=document.getElementById("peopleNum");
+        this.oTextarea=document.getElementById("textarea");
+        this.oSelect=document.getElementById("oSelect");
+        this.qqface=document.getElementById("qqface");
+        this.oSend=document.getElementById("send");
+        this.oChat=document.getElementById("chat");
+        this.oEdit=document.getElementById("edit");
+
+    },
+    clearRoom:function(){
+        this.oSelect.innerHTML="<option value='所有人'>所有人</option>";
+        this.peopleNum.innerHTML="目前共有：人";
+        this.RoomWrapper.style.display="none";
+        this.oChat_conatiner.innerHTML="";
+        this.wrapper_title.innerHTML="";
+        this.peopleList.innerHTML="";
+        this.oEdit.innerHTML="";
+        // this.RoomWrapper.innerHTML="";
+    },
+    joinRoom:function(title){
+        if(this.roomTitle){
+            if(this.roomTitle!=title){
+                this.exitRoom();
+            }else{
+                return;
+            }
+        }
+        if(checkRepeat(title,UserInfo.roomsArr)){
+            this.roomTitle=title;
+            if(this.innHTML){
+                this.clearRoom();
+            }
+            this.createRoom("公聊室",title);
+            ws.emit('joingroup',{"room":title});
+        }else{
+            alert("不存在该房间");
+        }
+    },
+    exitRoom:function(){
+        if(!this.roomTitle){
+            return;
+        }
+        this.clearRoom();
+        ws.emit('leavegroup',{"room":this.roomTitle});
+        delete this.roomTitle;
+    },
+    addRoomState:function(peoplearr){
+        this.peopleNum.innerHTML="目前共有："+peoplearr.length+"人";
+        for(var i=0;i<peoplearr.length;i++){
+            var oLi=document.createElement("li");
+            oLi.innerHTML=peoplearr[i];
+            this.peopleList.appendChild(oLi);
+            if(peoplearr[i]!==this.userName){
+                var oOption=document.createElement("option");
+                oOption.innerHTML=peoplearr[i];
+                oOption.value=peoplearr[i];
+                this.oSelect.appendChild(oOption);
+            }
+        }
+    },
+    addRoomPeople:function(peopleNum,addPeople){
+        this.peopleNum.innerHTML="目前共有："+peopleNum+"人";
+        var oLi=document.createElement("li");
+        oLi.innerHTML=addPeople;
+        this.peopleList.appendChild(oLi);
+        var oOption=document.createElement("option");
+        oOption.innerHTML=addPeople;
+        this.oSelect.appendChild(oOption); 
+    },
+    deleteRoomPeople:function(peopleNum,deletePeople){
+        this.peopleNum.innerHTML="目前共有："+peopleNum+"人";
+        var aLi=this.peopleList.getElementsByTagName("li");
+        var aOption=this.oSelect.getElementsByTagName("option");
+        for(var i=0;i<aLi.length;i++){
+            if(aLi[i].innerHTML==deletePeople){
+                this.peopleList.removeChild(aLi[i]);
+                break;
+            }
+        }
+        for(var i=0;i<aOption.length;i++){
+            if(aOption[i].innerHTML==deletePeople){
+                this.oSelect.removeChild(aOption[i]);
+                break;
+            }
+        }
+    },
+    addMessage:function(from,msg){
+        var oLi = document.createElement("li");
+        var str;
+        if(Room.userName==from){
+            oLi.className="right";
+        }else{
+            oLi.className="left";
+        }
+        str="<div class='messageCss'>";
+        str+="<img />"
+        str+="<div class='name'>"+from+"</div>";
+        str+="<div class='msg'>"+msg+"</div>"
+        str+="</div>";
+        oLi.innerHTML=str;
+        this.oChat_conatiner.appendChild(oLi);
+        this.oChat.scrollTop=this.oChat.scrollHeight;
+        /*this.oTextarea.focus();*/
+    },
+    addSystemMessage:function(from,msg){
+        var oLi = document.createElement("li");
+        oLi.className="announcement";
+        oLi.innerHTML="<span>"+from+"</span>"+":"+msg;
+        this.oChat_conatiner.appendChild(oLi);
+        this.oChat.scrollTop=this.oChat.scrollHeight;
+        /*this.oTextarea.focus();*/
+    },
+    send:function(){
+        var msg=this.oEdit.innerHTML;
+        if(!msg){
+            return;
+        }
+        if(this.oSelect.value=="所有人"){  //给所有人
+            ws.emit('send.message',msg);
+        }else{
+            ws.emit('send.privateMessage',this.oSelect.value,msg);
+        }
+        this.oEdit.innerHTML="";
+
+        /*var msg=this.oEdit.innerHTML;
+        if(!msg){
+            return;
+        }
+        ws.emit('send.message',msg);
+        this.oEdit.innerHTML="";*/
+    },
+    sendprivateMessage:function(to){
+        var msg=this.oEdit.innerHTML;
+        if(!msg){
+            return;
+        }
+        ws.emit('send.privateMessage',to,msg);
+        this.oEdit.innerHTML="";
+    }
+    /*send:function(){
+        var msg=this.oEdit.innerHTML;
+        if(!msg){
+            return;
+        }
+        if(this.oSelect.value=="所有人"){  //给所有人
+            ws.emit('send.message',msg);
+        }else{
+            ws.emit('send.privateMessage',this.oSelect.value,msg);
+        }
+        this.oEdit.innerHTML="";
+    }*/
+}
+var UserInfo={
+    existp_name:document.getElementById("existp_name"),
+    rooms:document.getElementById("rooms"),
+    user:document.getElementById("user"),
+    originRooms:function(arr){
+        if(!UserInfo.roomsArr){
+            UserInfo.roomsArr=[];
+        }
+        var html="";
+        for(var i=0;i<arr.length;i++){
+            if(i==0){
+                html+='<li><span onclick="Room.joinRoom(this.innerHTML)">'+arr[i]+'</span></li>';
+            }else{
+                html+=this.addRoomText(arr[i]);
+            }
+            UserInfo.roomsArr.push(arr[i]);
+        }
+        this.rooms.innerHTML=html;
+    },
+    addRoom:function(){         //添加房间
+        var RoomText = window.prompt('输入添加的房间名!');
+        while(!RoomText){
+            RoomText = window.prompt('房间名不能为空，请重新输入!')
+        }
+        var This=this;
+        Ajax({
+            type:"POST",
+            url:"/addRoom",
+            data:"userName="+This.user.innerHTML+"&addRoom="+RoomText,
+            success:function(msg){
+                console.log(msg);
+                if(msg==="true"){
+                    This.rooms.innerHTML+=This.addRoomText(RoomText);
+                    UserInfo.roomsArr.push(RoomText);
+                }else{
+                    // var fg=true;
+                    // var aLi=This.rooms.getElementsByTagName("li");
+                    // for(var i=0;i<aLi.length;i++){
+                    //     var oSpan=aLi[i].getElementsByTagName("span")[0];
+                    //     if(oSpan.innerHTML==RoomText){
+                    //         fg=false;
+                    //         break;
+                    //     }
+                    // }
+                    // if(fg){
+                    //     This.rooms.innerHTML+=This.addRoomText(RoomText);
+                    // }else{
+                        alert("已存在该房间");
+                    // }
+                }
+            },
+            error:function(msg){
+                console.log(msg);
+            }
+        });
+        
+    },
+    deleteRoom:function(RoomText){
+        var This=this;
+        if(!confirm("确认删除该房间")){
+            return;
+        }
+        if(RoomText=="公聊室"){
+            alert("无法删除公聊室");
+            return;
+        }
+        Ajax({
+            type:"POST",
+            url:"/deleteRoom",
+            data:"userName="+This.user.innerHTML+"&deleteRoom="+RoomText,
+            success:function(msg){
+                if(msg==="true"){
+                    var fg;
+                    var aLi=This.rooms.getElementsByTagName("li");
+                    for(var i=0;i<aLi.length;i++){
+                        var oSpan=aLi[i].getElementsByTagName("span")[0];
+                        if(oSpan.innerHTML==RoomText){
+                            fg=i;
+                            break;
+                        }
+                    }
+                    if(RoomText==Room.roomTitle){
+                        Room.exitRoom();
+                    }
+                    This.rooms.removeChild(aLi[fg]);
+                    UserInfo.roomsArr.removeStaff(RoomText);
+                }else{
+                    alert("不存在该房间");
+                }
+            },
+            error:function(msg){
+                console.log(msg);
+            }
+        });
+    },
+
+    addRoomText:function(RoomText){
+        return '<li><span onclick="Room.joinRoom(this.innerHTML)">'+RoomText+'</span><i class="deleteIcon" onclick="UserInfo.deleteRoom('+"'"+''+RoomText+''+"'"+')"></i></li>';
+    },
+    addchat:function(names){     //添加
+        this.existp_name.innerHTML="<span>所有人</span>";
+        for(var i=0;i<names.length;i++){
+            var oP = document.createElement("p");
+            oP.innerHTML=names[i];
+            this.existp_name.appendChild(oP);
+        }
+    }
+}
+
+var textBox={
+    Boxwrapper:document.getElementById("fwrap"),
+    titleword:document.getElementById("word"),
+    contentList:document.getElementById("contentList"),
+    open:function(){
+        var user=document.getElementById("user");
+        Ajax({
+            //获取成员
+            type:"POST",
+            url:"/getStaff",
+            data:"userName="+user.innerHTML+"&Room="+Room.wrapper_title.innerHTML,
+            success:function(msg){
+                textBox.Boxwrapper.style.display="";
+                textBox.titleword.innerHTML='成员邀请';
+                var arr=msg.split(",");
+                if(msg==""){
+                    return;
+                }
+                textBox.createStaff(arr);
+            },
+            error:function(err){
+                console.log(err);
+            }
+        });
+        
+    },
+    createStaff:function(arr){
+        var str="";
+        for(var i=0;i<arr.length;i++){
+            str+='<li><label><input type="checkbox" name="addstaff" value="'+arr[i]+'" />'+arr[i]+'</label></li>';
+        }
+        this.contentList.innerHTML=str;
+    },
+    closeBox:function(){
+        this.titleword.innerHTML="";
+        this.contentList.innerHTML="";
+        this.Boxwrapper.style.display="none";
+    },
+    submitStaff:function(){
+        var arr=[];
+        var aInput=this.contentList.getElementsByTagName("input");
+        for(var i=0;i<aInput.length;i++){
+            if(aInput[i].checked){
+                arr.push(aInput[i].value);
+            }
+        }
+        return arr;
+    },
+    submit:function(){
+        var arr=this.submitStaff();
+        this.closeBox();
+        ws.emit("StaffaddRoom",arr,Room.roomTitle);
+    }
+}
+var ws = io.connect('http://localhost:3000');
+ws.emit('join', GetQueryString("userName"));
+ws.on('checkSuccess',function(nickname){
+    Room.userName=nickname;
+    var user=document.getElementById("user");
+    user.innerHTML=nickname;
+    if(Room.roomTitle){
+        delete Room.roomTitle;
+    }
+    Room.joinRoom("公聊室");
+})
+ws.on('UserInfo.RoomStaff',function(flag,RoomText){
+    UserInfo.RoomStaff(flag,RoomText);
+})
+ws.on('send.message',function(from,msg){
+    Room.addMessage(from,msg);
+})
+ws.on('send.privateMessage',function(from,msg){
+    Room.addMessage(from,msg);
+})
+ws.on('announcement',function(from,msg){
+    Room.addSystemMessage(from,msg);
+})
+ws.on('UserInfo.Room',function(arr){
+    UserInfo.originRooms(arr);
+})
+ws.on('updateCp',function(names){
+    UserInfo.addchat(names);
+})
+ws.on('updateRoomInfo',function(type,peoplearr,people){     //更新房间内信息
+    if(type==="addRoomState"){
+        Room.addRoomState(peoplearr);
+    }else if(type==="addPeople"){
+        Room.addRoomPeople(peoplearr.length,people);
+    }else if(type==="deletePeople"){
+        Room.deleteRoomPeople(peoplearr.length,people);
+    }
+})
+ws.on('UserInfo.updateRooms',function(RoomText){
+    UserInfo.roomsArr.push(RoomText);
+    UserInfo.rooms.innerHTML+=UserInfo.addRoomText(RoomText);
+})
+ws.on('UserInfo.closeRoom',function(msg){
+    console.log(msg);
+})
+
+</script>
+</body>
+</html>

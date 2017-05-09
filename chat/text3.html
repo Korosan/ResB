@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>验证中文字符</title>
+</head>
+<style type="text/css">
+div{
+	background: red;
+	opacity: 0.5;
+	height: 300px;
+	width: 300px;
+	position: absolute;
+	filter:alpha(opacity=50);
+}
+</style>
+<body>
+<div></div>
+<input type="text" id="rg" onblur="checkChinese(this,this.value)" />
+<script type="text/javascript">
+function checkChinese(obj,val){
+	var reg=new RegExp("[\\u4E00-\\u9FFF]+","g");
+	if(reg.test(val)){ 
+		alert("sb");
+	}
+}
+
+</script>
+</body>
+</html>

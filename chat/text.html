@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文本框</title>
+</head>
+<style type="text/css">
+*{
+    margin:0;
+    padding: 0;
+}
+#fwrap{
+    display: table;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+#fwrap .darkbg{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    filter:alpha(opacity=50);   
+    -moz-opacity:0.5;   
+    -khtml-opacity: 0.5;   
+    opacity: 0.5;  
+    z-index: 9;
+}
+#fwrap .vmid{
+    display: table-cell;
+    vertical-align: middle;
+}
+#fcontain{
+    width: 60%;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1000;
+    background: #fff;
+    border-radius: 4px;
+}
+#fcontain .title{
+    position: relative;
+    padding: 10px 10px;
+    box-sizing:content-box;
+}
+#fcontain .title .close:before{
+    width: 2px;
+    background: #000;
+    height: 12px;
+    top: 2px;
+    left: 50%;
+    margin-left: -1px;
+    position: absolute;
+    content: "";
+    transform-origin:center;
+    transform:rotate(45deg);
+    -ms-transform:rotate(45deg);     /* IE 9 */
+    -moz-transform:rotate(45deg);    /* Firefox */
+    -webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+    -o-transform:rotate(45deg);  /* Opera */
+
+}
+#fcontain .title .close{
+    right: 10px;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background: #eee;
+    cursor: pointer;
+}
+#fcontain .title .close:after{
+    background: #000;
+    width: 2px;
+    height: 12px;
+    content: "";
+    position: absolute;
+    right: 50%;
+    margin-right: -1px;
+    top: 2px;
+    transform-origin:center;
+    transform:rotate(135deg);
+    -ms-transform:rotate(135deg);     /* IE 9 */
+    -moz-transform:rotate(135deg);    /* Firefox */
+    -webkit-transform:rotate(135deg); /* Safari 和 Chrome */
+    -o-transform:rotate(135deg);  /* Opera */
+
+}
+#fcontain .content{
+    background: #FFFBFB;
+}
+#fcontain .content ul{
+    max-height: 300px;
+    overflow-y: auto;
+}
+#fcontain .content ul li{
+    list-style: none;
+    line-height: 30px;
+    padding: 0 17px;
+}
+#fcontain .content ul li input{
+    margin-right: 5px;
+}
+#fcontain .bottom{
+    line-height: 40px;
+    text-align: center;
+}
+#fcontain .bottom input{
+    width: 30%;
+    height: 20px;
+}
+</style>
+<body>
+<div id="fwrap">
+    <div class="darkbg"></div>
+    <div class="vmid">
+        <div id="fcontain">
+            <div class="title">
+                <span class="word">成员邀请</span>
+                <span class="close"></span>
+            </div>
+            <div class="content" contentEditable="true">
+                <ul id="contentList">
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox1" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox2" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox3" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox1" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox2" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox3" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox1" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox2" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox3" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox1" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox2" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox3" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox1" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox2" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox3" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox1" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox2" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox3" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox4" />321312</label></li>
+                    <li><label><input type="checkbox" name="checkbox" value="checkbox5" />321312</label></li>
+                </ul>
+            </div>
+            <div class="bottom">
+                <input type="button" value="提交" />
+                <input type="button" value="取消" />
+            </div>
+        </div>
+    </div>
+</div>
+<div contenteditable='true' id="selectable">http://example.com/page.htm</div>
+    
+    <script type="text/javascript">
+    sel = getSelection()
+    document.onclick = function(event) {
+      event.preventDefault();
+      range = new Range;
+      range.selectNode(event.target);
+      console.log(range.selectNode(event.target));
+      var node =document.createElement("img");
+      window.getSelection().getRangeAt(0).insertNode(node);
+      console.log(window.getSelection().getRangeAt(0).insertNode(node));
+      console.log(sel);
+      /*sel.removeAllRanges();
+      sel.addRange(range)*/
+    }
+        // function selectText(containerid) {
+        //     console.log(window.getSelection);
+        //     if (document.selection) {
+        //         var range = document.body.createTextRange();
+        //         range.moveToElementText(document.getElementById(containerid));
+        //         range.select();
+        //         console.log(range.select());
+        //     } else if (window.getSelection) {
+        //         var range = document.createRange();
+        //         range.selectNodeContents(document.getElementById(containerid));
+        //         console.log(range);
+        //         /*window.getSelection().removeAllRanges();
+        //         window.getSelection().addRange(range);*/
+        //     }
+        // }
+    </script>
+<script type="text/javascript">
+function a(){
+    var oUl=document.getElementById("contentList");
+    var aInput=oUl.getElementsByTagName("input");
+    var arr=[];
+    for(var i=0;i<aInput.length;i++){
+        if(aInput[i].checked){
+            arr.push(aInput[i].value);
+        }
+    }
+    console.log(arr);
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/qqface.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<style type="text/css">
+    #toolbar{
+        margin-top: 300px;
+    }
+    #edit{
+        width: 500px;
+        height: 500px;
+        border: 1px solid red;
+    }
+</style>
+<body>
+<div id="toolbar">
+    <div id="toolbar_cs">
+        <span class="faceIcon" title="表情" onclick="qqfaceQuota(this)"></span>
+        
+    </div>
+    <img src="upload/28Pemoji.png" height="202" width="434" alt="">
+    <div id="qqface">
+        <ul id="bar">
+            <span>QQ表情</span>
+        </ul>
+        <ul id="p28">
+            <a class="P28_emoji P28_emoji1" ></a>
+            <a class="P28_emoji P28_emoji2" ></a>
+            <a class="P28_emoji P28_emoji3" ></a>
+            <a class="P28_emoji P28_emoji4" ></a>
+            <a class="P28_emoji P28_emoji5" ></a>
+            <a class="P28_emoji P28_emoji6" ></a>
+            <a class="P28_emoji P28_emoji7" ></a>
+            <a class="P28_emoji P28_emoji8" ></a>
+            <a class="P28_emoji P28_emoji9" ></a>
+            <a class="P28_emoji P28_emoji10" ></a>
+            <a class="P28_emoji P28_emoji11" ></a>
+            <a class="P28_emoji P28_emoji12" ></a>
+            <a class="P28_emoji P28_emoji13" ></a>
+            <a class="P28_emoji P28_emoji14" ></a>
+            <a class="P28_emoji P28_emoji15" ></a>
+            <a class="P28_emoji P28_emoji16" ></a>
+            <a class="P28_emoji P28_emoji17" ></a>
+            <a class="P28_emoji P28_emoji18" ></a>
+            <a class="P28_emoji P28_emoji19" ></a>
+            <a class="P28_emoji P28_emoji20" ></a>
+            <a class="P28_emoji P28_emoji21" ></a>
+            <a class="P28_emoji P28_emoji22" ></a>
+            <a class="P28_emoji P28_emoji23" ></a>
+            <a class="P28_emoji P28_emoji24" ></a>
+            <a class="P28_emoji P28_emoji25" ></a>
+            <a class="P28_emoji P28_emoji26" ></a>
+            <a class="P28_emoji P28_emoji27" ></a>
+            <a class="P28_emoji P28_emoji28" ></a>
+            <a class="P28_emoji P28_emoji29" ></a>
+            <a class="P28_emoji P28_emoji30" ></a>
+            <a class="P28_emoji P28_emoji31" ></a>
+            <a class="P28_emoji P28_emoji32" ></a>
+            <a class="P28_emoji P28_emoji33" ></a>
+            <a class="P28_emoji P28_emoji34" ></a>
+            <a class="P28_emoji P28_emoji35" ></a>
+            <a class="P28_emoji P28_emoji36" ></a>
+            <a class="P28_emoji P28_emoji37" ></a>
+            <a class="P28_emoji P28_emoji38" ></a>
+            <a class="P28_emoji P28_emoji39" ></a>
+            <a class="P28_emoji P28_emoji40" ></a>
+            <a class="P28_emoji P28_emoji41" ></a>
+            <a class="P28_emoji P28_emoji42" ></a>
+            <a class="P28_emoji P28_emoji43" ></a>
+            <a class="P28_emoji P28_emoji44" ></a>
+            <a class="P28_emoji P28_emoji45" ></a>
+            <a class="P28_emoji P28_emoji46" ></a>
+            <a class="P28_emoji P28_emoji47" ></a>
+            <a class="P28_emoji P28_emoji48" ></a>
+            <a class="P28_emoji P28_emoji49" ></a>
+            <a class="P28_emoji P28_emoji50" ></a>
+            <a class="P28_emoji P28_emoji51" ></a>
+            <a class="P28_emoji P28_emoji52" ></a>
+            <a class="P28_emoji P28_emoji53" ></a>
+            <a class="P28_emoji P28_emoji54" ></a>
+            <a class="P28_emoji P28_emoji55" ></a>
+            <a class="P28_emoji P28_emoji56" ></a>
+            <a class="P28_emoji P28_emoji57" ></a>
+            <a class="P28_emoji P28_emoji58" ></a>
+            <a class="P28_emoji P28_emoji59" ></a>
+            <a class="P28_emoji P28_emoji60" ></a>
+            <a class="P28_emoji P28_emoji61" ></a>
+            <a class="P28_emoji P28_emoji62" ></a>
+            <a class="P28_emoji P28_emoji63" ></a>
+            <a class="P28_emoji P28_emoji64" ></a>
+            <a class="P28_emoji P28_emoji65" ></a>
+            <a class="P28_emoji P28_emoji66" ></a>
+            <a class="P28_emoji P28_emoji67" ></a>
+            <a class="P28_emoji P28_emoji68" ></a>
+            <a class="P28_emoji P28_emoji69" ></a>
+            <a class="P28_emoji P28_emoji70" ></a>
+            <a class="P28_emoji P28_emoji71" ></a>
+            <a class="P28_emoji P28_emoji72" ></a>
+            <a class="P28_emoji P28_emoji73" ></a>
+            <a class="P28_emoji P28_emoji74" ></a>
+            <a class="P28_emoji P28_emoji75" ></a>
+            <a class="P28_emoji P28_emoji76" ></a>
+            <a class="P28_emoji P28_emoji77" ></a>
+            <a class="P28_emoji P28_emoji78" ></a>
+            <a class="P28_emoji P28_emoji79" ></a>
+            <a class="P28_emoji P28_emoji80" ></a>
+            <a class="P28_emoji P28_emoji81" ></a>
+            <a class="P28_emoji P28_emoji82" ></a>
+            <a class="P28_emoji P28_emoji83" ></a>
+            <a class="P28_emoji P28_emoji84" ></a>
+            <a class="P28_emoji P28_emoji85" ></a>
+            <a class="P28_emoji P28_emoji86" ></a>
+            <a class="P28_emoji P28_emoji87" ></a>
+            <a class="P28_emoji P28_emoji88" ></a>
+            <a class="P28_emoji P28_emoji89" ></a>
+            <a class="P28_emoji P28_emoji90" ></a>
+            <a class="P28_emoji P28_emoji91" ></a>
+            <a class="P28_emoji P28_emoji92" ></a>
+            <a class="P28_emoji P28_emoji93" ></a>
+            <a class="P28_emoji P28_emoji94" ></a>
+            <a class="P28_emoji P28_emoji95" ></a>
+            <a class="P28_emoji P28_emoji96" ></a>
+            <a class="P28_emoji P28_emoji97" ></a>
+            <a class="P28_emoji P28_emoji98" ></a>
+            <a class="P28_emoji P28_emoji99" ></a>
+            <a class="P28_emoji P28_emoji100" ></a>
+            <a class="P28_emoji P28_emoji101" ></a>
+            <a class="P28_emoji P28_emoji102" ></a>
+            <a class="P28_emoji P28_emoji103" ></a>
+            <a class="P28_emoji P28_emoji104" ></a>
+            <a class="P28_emoji P28_emoji105" ></a>
+        </ul>
+    </div>
+</div>
+
+<div id="edit" contenteditable >
+</div>
+<input type="text" id="emojiInput">
+<button id="sendEmoji">发送表情</button>
+<button id="sendEmoji2">发送表情</button>
+<script type="text/javascript">
+window.onload=function(){
+
+    var emoji=document.getElementById("p28");
+    var aA=emoji.getElementsByTagName("a");
+    for(var i=0;i<aA.length;i++){
+        aA[i].onclick=function(){
+            insertEmoji(this);
+        }
+    }
+}
+function qqfaceQuota(This){
+    var qqface=document.getElementById("qqface");
+    if(qqface.className=="open"){
+        qqface.className="";
+        qqface.style.top="";
+    }else{
+        qqface.className="open";
+        qqface.style.top=-qqface.offsetHeight+"px";
+    }
+}
+</script>
+    <script>
+        var sendEmoji = document.getElementById('sendEmoji')
+
+        // 定义最后光标对象
+        var lastEditRange;
+
+        // 编辑框点击事件
+        document.getElementById('edit').onclick = function() {
+            // 获取选定对象
+            var selection = getSelection()
+            // 设置最后光标对象
+            lastEditRange = selection.getRangeAt(0)
+        }
+
+        // 编辑框按键弹起事件
+        document.getElementById('edit').onkeyup = function() {
+            // 获取选定对象
+            var selection = getSelection()
+            // 设置最后光标对象
+            lastEditRange = selection.getRangeAt(0)
+        }
+
+        // 表情点击事件
+        document.getElementById('sendEmoji').onclick = function() {
+            // 获取编辑框对象
+            var edit = document.getElementById('edit')
+            // 获取输入框对象
+            var emojiInput = document.getElementById('emojiInput')
+            // 编辑框设置焦点
+            edit.focus()
+            // 获取选定对象
+            var selection = getSelection()
+            // 判断是否有最后光标对象存在
+            if (lastEditRange) {
+                // 存在最后光标对象，选定对象清除所有光标并添加最后光标还原之前的状态
+                selection.removeAllRanges()
+                selection.addRange(lastEditRange)
+            }
+            // 判断选定对象范围是编辑框还是文本节点
+            if (selection.anchorNode.nodeName != '#text') {
+                // 如果是编辑框范围。则创建表情文本节点进行插入
+                var emojiText = document.createTextNode(emojiInput.value)
+                
+                if (edit.childNodes.length > 0) {
+                    // 如果文本框的子元素大于0，则表示有其他元素，则按照位置插入表情节点
+                    for (var i = 0; i < edit.childNodes.length; i++) {
+                        if (i == selection.anchorOffset) {
+                            edit.insertBefore(emojiText, edit.childNodes[i])
+                        }
+                    }
+                } else {
+                    // 否则直接插入一个表情元素
+                    edit.appendChild(emojiText)
+                }
+                // 创建新的光标对象
+                var range = document.createRange()
+                // 光标对象的范围界定为新建的表情节点
+                range.selectNodeContents(emojiText)
+                // 光标位置定位在表情节点的最大长度
+                range.setStart(emojiText, emojiText.length)
+                // 使光标开始和光标结束重叠
+                range.collapse(true)
+                // 清除选定对象的所有光标对象
+                selection.removeAllRanges()
+                // 插入新的光标对象
+                selection.addRange(range)
+            } else {
+                // 如果是文本节点则先获取光标对象
+                var range = selection.getRangeAt(0)
+                // 获取光标对象的范围界定对象，一般就是textNode对象
+                var textNode = range.startContainer;
+                // 获取光标位置
+                var rangeStartOffset = range.startOffset;
+                // 文本节点在光标位置处插入新的表情内容
+                textNode.insertData(rangeStartOffset, emojiInput.value)
+                // 光标移动到到原来的位置加上新内容的长度
+                range.setStart(textNode, rangeStartOffset + emojiInput.value.length)
+                // 光标开始和光标结束重叠
+                range.collapse(true)
+                // 清除选定对象的所有光标对象
+                selection.removeAllRanges()
+                // 插入新的光标对象
+                selection.addRange(range)
+            }
+            // 无论如何都要记录最后光标对象
+            lastEditRange = selection.getRangeAt(0)
+        }
+        document.getElementById('sendEmoji2').onclick = function() {
+            // 获取编辑框对象
+            var edit = document.getElementById('edit')
+            // 获取输入框对象
+            var emojiInput = document.getElementById('emojiInput')
+            // 编辑框设置焦点
+            edit.focus()
+            // 获取选定对象
+            var selection = getSelection()
+            // 判断是否有最后光标对象存在
+            
+            if (lastEditRange) {
+                // 存在最后光标对象，选定对象清除所有光标并添加最后光标还原之前的状态
+                selection.removeAllRanges()
+                selection.addRange(lastEditRange)
+            }
+            var a=document.createElement("img");
+
+            a.src="upload/6.png";
+            if(selection.getRangeAt(0).startOffset!=selection.getRangeAt(0).endOffset){
+                selection.getRangeAt(0).deleteContents();
+            }
+            selection.getRangeAt(0).insertNode(a);
+            var range = document.createRange()
+                // 光标对象的范围界定为新建的表情节点
+                range.selectNodeContents(a)
+                // 光标位置定位在表情节点的最大长度
+                range.setStartAfter(a)
+                // 使光标开始和光标结束重叠
+                // range.collapse(true)
+                // 清除选定对象的所有光标对象
+                selection.removeAllRanges()
+                // 插入新的光标对象
+                selection.addRange(range)
+            // 判断选定对象范围是编辑框还是文本节点
+            // if (selection.anchorNode.nodeName != '#text') {
+            //     // 如果是编辑框范围。则创建表情文本节点进行插入
+            //     var emojiText = document.createTextNode(emojiInput.value)
+                
+            //     if (edit.childNodes.length > 0) {
+            //         // 如果文本框的子元素大于0，则表示有其他元素，则按照位置插入表情节点
+            //         for (var i = 0; i < edit.childNodes.length; i++) {
+            //             if (i == selection.anchorOffset) {
+            //                 edit.insertBefore(emojiText, edit.childNodes[i])
+            //             }
+            //         }
+            //     } else {
+            //         // 否则直接插入一个表情元素
+            //         edit.appendChild(emojiText)
+            //     }
+            //     // 创建新的光标对象
+            //     var range = document.createRange()
+            //     // 光标对象的范围界定为新建的表情节点
+            //     range.selectNodeContents(emojiText)
+            //     // 光标位置定位在表情节点的最大长度
+            //     range.setStart(emojiText, emojiText.length)
+            //     // 使光标开始和光标结束重叠
+            //     range.collapse(true)
+            //     // 清除选定对象的所有光标对象
+            //     selection.removeAllRanges()
+            //     // 插入新的光标对象
+            //     selection.addRange(range)
+            // } else {
+            //     // 如果是文本节点则先获取光标对象
+            //     var range = selection.getRangeAt(0)
+            //     // 获取光标对象的范围界定对象，一般就是textNode对象
+            //     var textNode = range.startContainer;
+            //     // 获取光标位置
+            //     var rangeStartOffset = range.startOffset;
+            //     // 文本节点在光标位置处插入新的表情内容
+            //     textNode.insertData(rangeStartOffset, emojiInput.value)
+            //     // 光标移动到到原来的位置加上新内容的长度
+            //     range.setStart(textNode, rangeStartOffset + emojiInput.value.length)
+            //     // 光标开始和光标结束重叠
+            //     range.collapse(true)
+            //     // 清除选定对象的所有光标对象
+            //     selection.removeAllRanges()
+            //     // 插入新的光标对象
+            //     selection.addRange(range)
+            // }
+            // // 无论如何都要记录最后光标对象
+            lastEditRange = selection.getRangeAt(0)
+        }
+    </script>
+
+
+
+
+
+<script type="text/javascript">
+function insertEmoji(oImg){
+    // 获取编辑框对象
+    var edit = document.getElementById('edit')
+    // 获取输入框对象
+    var emojiInput = document.getElementById('emojiInput')
+    // 编辑框设置焦点
+    edit.focus()
+    // 获取选定对象
+    var selection = getSelection()
+    // 判断是否有最后光标对象存在
+    if (lastEditRange) {
+        // 存在最后光标对象，选定对象清除所有光标并添加最后光标还原之前的状态
+        selection.removeAllRanges()
+        selection.addRange(lastEditRange)
+    }
+    var Img=document.createElement("img");
+    Img.src="upload/spacer.gif";
+    var str=oImg.className;
+
+    Img.className=str.replace(/P28/g,"P20");
+    selection.getRangeAt(0).insertNode(oImg);
+    var range=document.createRange();
+    range.selectNode(Img);
+    range.setStartAfter(Img);
+    // 使光标开始和光标结束重叠
+    range.collapse(true)
+    // 清除选定对象的所有光标对象
+    selection.removeAllRanges()
+    // 插入新的光标对象
+    selection.addRange(range)
+    lastEditRange = selection.getRangeAt(0);
+
+}
+
+
+var content=document.getElementById("edit");
+var a;
+var pastedText;
+content.onpaste=function (e){
+    a=e;
+    console.log(1);
+    console.log(a.clipboardData);
+    console.log(2);
+    console.log(a.clipboardData.types);
+    console.log(3);
+    console.log(a.clipboardData.files);
+    for(var i=0;i<a.clipboardData.types.length;i++){
+        console.log(4);
+        console.log(a.clipboardData.getData(a.clipboardData.types[i]));
+    }
+    if (window.clipboardData && window.clipboardData.getData) { // IE
+        pastedText = window.clipboardData.getData('Text');
+    } else {
+        pastedText = e.clipboardData.getData('text/html');
+        // document.getElementById("edit").innerHTML=pastedText;
+        if(confirm("确认上传图片")){
+        }else{
+            e.preventDefault();
+            return;
+        }
+    // e.preventDefault();
+    }
+    alert(pastedText);
+}
+// content.onpaste=function(e){
+//     a=e;
+//     console.log(a.clipboardData);
+//     console.log(a.clipboardData.types);
+//     console.log(a.clipboardData.files);
+//     console.log(a.clipboardData.getData('Files'));
+    
+// }
+// window.onload = function() {
+//     // 获取要监听的 input 或 textarea
+//     var content = document.getElementById("edit");
+               
+//     // 开始监听，第二个参数为回调函数，返回一个对象，其中包括
+//     // start: 光标开始位置，end: 粘贴后光标位置
+//     // length: 粘贴内容的长度，replacedtext: 被替换的内容
+//     // text: 这个就是被粘贴的内容
+//     detectPaste(content, function(pasteInfo) {
+//         alert(pasteInfo.text);
+//     });
+// };
+// function getSelectionBoundary(el, start) {
+//     var property = start ? "selectionStart" : "selectionEnd";
+//     var originalValue, textInputRange, precedingRange
+//         , pos, bookmark, isAtEnd;
+                        
+//     if(typeof el[property] == "number") {
+//         return el[property];
+//     }
+//     else if(document.selection && document.selection.createRange) {
+//         el.focus();
+//         var range = document.selection.createRange();
+//         if(range) {
+//             if(document.selection.type == "Text") {
+//                 range.collapse(!!start);
+//             }
+//             originalValue = el.value;
+//             textInputRange = el.createTextRange();
+//             precedingRange = el.createTextRange();
+//             pos = 0;
+//             bookmark = range.getBookmark();
+//             textInputRange.moveToBookmark(bookmark);
+//             if(/[\r\n]/.test(originalValue)) {
+//                 try {
+//                     range.move("character", 1);
+//                     isAtEnd = (range.parentElement() != el);
+//                 }
+//                 catch(ex) {
+//                     isAtEnd = true;
+//                 }
+//                 range.moveToBookmark(bookmark);
+//                 if(isAtEnd) {
+//                     pos = originalValue.length;
+//                 }
+//                 else {
+//                     textInputRange.text = " ";
+//                     precedingRange.setEndPoint("EndToStart",
+//                         textInputRange);
+//                     pos = precedingRange.text.length - 1;
+//                     textInputRange.moveStart("character", -1);
+//                     textInputRange.text = "";
+//                 }
+//             }
+//             else {
+//                 precedingRange.setEndPoint("EndToStart", textInputRange);
+//                 pos = precedingRange.text.length;
+//             }
+//             return pos;
+//         }
+//     }
+//     return 0;
+// }
+                        
+// function getInputSelection(ele) {
+//     var start = getSelectionBoundary(ele, true),
+//     end = getSelectionBoundary(ele, false);
+//     return {
+//         start: start,
+//         end: end,
+//         length: end - start,
+//         text: ele.value.slice(start, end)
+//     };
+// }
+                        
+// function detectPaste(ele, callback) {
+//     ele.onpaste = function() {
+//         var sel = getInputSelection(ele);
+//         var initialLength = ele.value.length;
+//         window.setTimeout(function() {
+//             var val = ele.value;
+//             var pastedTextLength =
+//                 val.length - (initialLength - sel.length);
+//             var end = sel.start + pastedTextLength;
+//             callback({
+//                 start: sel.start,
+//                 end: end,
+//                 length: pastedTextLength,
+//                 text: val.slice(sel.start, end),
+//                 replacedText: sel.text
+//             });
+//         }, 1);
+//     };
+// }
+
+</script>
+<script type="text/javascript">
+    function getBase64Image(img) {
+
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        canvas.id="c222";
+        document.body.appendChild(canvas);
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+        console.log(ext);
+
+        if(canvas.toDataURL()){
+            alert(1);
+        }else{
+            alert(2);
+        }
+        var dataURL = canvas.toDataURL("image/"+ext);
+        console.log(dataURL);
+        var a=document.createElement("img");
+        a.src=dataURL;
+        document.body.appendChild(a);
+        abc=new Image();
+        abc.src = canvas.toDataURL("image/jpeg");
+        return dataURL;
+}
+window.onload=function(){
+var abc;
+var img = "upload/28Pemoji.png";
+var image=new Image();
+image.src = img;
+var base64 = getBase64Image(image);
+    console.log(base64);
+
+}
+//  var imgSrc = "file:///C:\Users\Crow\Documents\Tencent Files\357873659\Image\Group\Image17\R_BZC5WQHNI(0I)IR)5%J]R.jpg";
+// //    var imgSrc = "img/1.jpg";
+//       function getBase64(img){//传入图片路径，返回base64
+//         function getBase64Image(img,width,height) {//width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+//           var canvas = document.createElement("canvas");
+//           canvas.width = width ? width : img.width;
+//           canvas.height = height ? height : img.height;
+ 
+//           var ctx = canvas.getContext("2d");
+//           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+//           var dataURL = canvas.toDataURL();
+//           return dataURL;
+//         }
+//         var image = new Image();
+//         image.crossOrigin = '';
+//         image.src = img;
+//         var deferred=$.Deferred();
+//         if(img){
+//           image.onload =function (){
+//             deferred.resolve(getBase64Image(image));//将base64传给done上传处理
+//           }
+//           return deferred.promise();//问题要让onload完成后再return sessionStorage['imgTest']
+//         }
+//       }
+//       getBase64(imgSrc)
+//         .then(function(base64){
+//           console.log(base64);
+//         },function(err){
+//           console.log(err);
+//         });
+</script>
+</body>
+</html>
