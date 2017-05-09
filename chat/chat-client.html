@@ -158,6 +158,7 @@ var Room={
             fileInputElement.onchange=function(){
                 uploadFile();
             }
+            var lastEditRange;
 
             this.oEdit.onclick = function() {
                 // 获取选定对象
@@ -189,13 +190,12 @@ var Room={
                 Room.send();
             }
         }
-        this.RoomWrapper.onclick=function(ev){
-            var ev = ev || window.event;
-            var target = ev.target || ev.srcElement;
-            console.log(target.id);
-            if(target.id=="send"){
-            }
-        }
+        // this.RoomWrapper.onclick=function(ev){
+        //     var ev = ev || window.event;
+        //     var target = ev.target || ev.srcElement;
+        //     if(target.id=="send"){
+        //     }
+        // }
     },
 
     qqfaceQuota:function(This){
@@ -238,7 +238,6 @@ var Room={
                 return;
             }
         }
-        console.log(UserInfo.roomsArr);
         if(checkRepeat(title,UserInfo.roomsArr)){
             this.roomTitle=title;
             if(this.innHTML){
@@ -364,13 +363,11 @@ var Room={
         this.oEdit.innerHTML="";
     }*/
 }
-Room.createRoom("公聊室","123");
 var UserInfo={
     existp_name:document.getElementById("existp_name"),
     rooms:document.getElementById("rooms"),
     user:document.getElementById("user"),
     originRooms:function(arr){
-        console.log(arr);
         if(!UserInfo.roomsArr){
             UserInfo.roomsArr=[];
         }
@@ -437,7 +434,6 @@ var UserInfo={
             url:"/deleteRoom",
             data:"userName="+This.user.innerHTML+"&deleteRoom="+RoomText,
             success:function(msg){
-                console.log(msg);
                 if(msg==="true"){
                     var fg;
                     var aLi=This.rooms.getElementsByTagName("li");
@@ -530,7 +526,6 @@ var textBox={
         ws.emit("StaffaddRoom",arr,Room.roomTitle);
     }
 }
-var lastEditRange;
 var ws = io.connect('http://localhost:3000');
 ws.emit('join', GetQueryString("userName"));
 ws.on('checkSuccess',function(nickname){
